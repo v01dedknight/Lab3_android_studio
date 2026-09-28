@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Happy Birthday"
+rootProject.name = "ComposeArticle"
 include(":app")
