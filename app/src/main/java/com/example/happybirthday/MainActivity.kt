@@ -5,12 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
 
@@ -27,82 +30,97 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            ComposeQuadrantScreen()
+            MyInformationScreen()
         }
     }
 }
 
 @Composable
-fun ComposeQuadrantScreen() {
+fun MyInformationScreen() {
 
-    BoxWithConstraints(
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        val halfWidth = maxWidth / 2
-        val halfHeight = maxHeight / 2
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .background(
+                        color = Color.LightGray,
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "ME",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.full_name),
+                fontSize = 36.sp,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.title),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
         Column {
 
-            Row {
-                Quadrant(
-                    title = stringResource(R.string.text_title),
-                    description = stringResource(R.string.text_description),
-                    color = Color(0xFFEADDFF),
-                    modifier = Modifier.size(halfWidth, halfHeight)
-                )
+            ContactRow(
+                icon = "☎",
+                text = stringResource(R.string.phone)
+            )
 
-                Quadrant(
-                    title = stringResource(R.string.image_title),
-                    description = stringResource(R.string.image_description),
-                    color = Color(0xFFD0BCFF),
-                    modifier = Modifier.size(halfWidth, halfHeight)
-                )
-            }
+            ContactRow(
+                icon = "@",
+                text = stringResource(R.string.social)
+            )
 
-            Row {
-                Quadrant(
-                    title = stringResource(R.string.row_title),
-                    description = stringResource(R.string.row_description),
-                    color = Color(0xFFB69DF8),
-                    modifier = Modifier.size(halfWidth, halfHeight)
-                )
-
-                Quadrant(
-                    title = stringResource(R.string.column_title),
-                    description = stringResource(R.string.column_description),
-                    color = Color(0xFFF6EDFF),
-                    modifier = Modifier.size(halfWidth, halfHeight)
-                )
-            }
+            ContactRow(
+                icon = "✉",
+                text = stringResource(R.string.email)
+            )
         }
     }
 }
 
 @Composable
-fun Quadrant(
-    title: String,
-    description: String,
-    color: Color,
-    modifier: Modifier = Modifier
+fun ContactRow(
+    icon: String,
+    text: String
 ) {
-
-    Column(
-        modifier = modifier
-            .background(color)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Row(
+        modifier = Modifier.padding(vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            text = icon,
+            fontSize = 26.sp
+        )
+
+        Spacer(
+            modifier = Modifier.width(16.dp)
         )
 
         Text(
-            text = description,
-            textAlign = TextAlign.Justify
+            text = text,
+            fontSize = 18.sp
         )
     }
 }
